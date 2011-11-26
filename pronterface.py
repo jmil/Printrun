@@ -4,6 +4,12 @@ try:
 except:
     print "WX is not installed. This program requires WX to run."
     raise
+try:
+    import wx.media
+except:
+    print "WX.media is needed to play audio files."
+    pass
+
 import printcore, os, sys, glob, time, threading, traceback, StringIO, gviz
 thread=threading.Thread
 winsize=(800,500)
@@ -95,6 +101,13 @@ class PronterWindow(wx.Frame,pronsole.pronsole):
         self.mini=False
         self.p.sendcb=self.sentcb
         self.curlayer=0
+        # Prepare for media playback
+        self.media=None
+        try:
+            self.media=wx.media.MediaCtrl(self.panel,size=(1,1))
+            self.Bind(wx.media.EVT_MEDIA_LOADED, self.media.Play)
+        except:
+            pass
     
     def online(self):
         print "Printer is now online"

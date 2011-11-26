@@ -3,6 +3,7 @@ from serial import Serial
 from threading import Thread
 import time
 import sys
+import os
 
 class printcore():
     def __init__(self,port=None,baud=None):
@@ -195,7 +196,14 @@ class printcore():
             except:
                 pass
         #callback for printing done
-        
+        # test media playback on print completion
+        try:
+            # self.media.Load("FuckYouRobot.wav")
+            #os.system("afplay FuckYouRobot.wav")
+            os.system("say -v cellos Your print is done. Fuck you Robot!")
+        except:
+            pass
+
     def _sendnext(self):
         if(not self.printer):
             return
